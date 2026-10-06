@@ -20,15 +20,19 @@
 1. **자연어 원샷 풀스택 생성 (One-Shot Feature Builder)**:
    - "사용자가 구글 로그인하고 프로필 사진과 닉네임을 수정하는 기능" 등 일상 언어로 입력하면 끝.
 2. **4단계 자율 에이전트 파이프라인 (Autonomous Chaining)**:
-   - 🗄️ **Step 1. Database**: PostgreSQL (Supabase) 테이블, RLS 보안 정책, 트리거
+   - 🗄️ **Step 1. Database**: PostgreSQL (Supabase) 테이블, RLS 보안 정책, 인덱스
    - ⚙️ **Step 2. Backend**: 스키마 컬럼과 100% 매핑되는 Next.js Server Actions CRUD 함수
-   - 🎨 **Step 3. Frontend**: 백엔드 함수를 직접 호출하는 반응형 React 19 + Tailwind CSS 폼 컴포넌트
+   - 🎨 **Step 3. Frontend**: 백엔드 함수를 직접 호출하는 반응형 React 19 + Tailwind CSS 컴포넌트
    - 📋 **Step 4. Guide**: 패키지 설치 명령어와 파일 저장 위치가 정리된 3분 적용 가이드
-3. **Google Gemini API 무료 연동**:
+3. **📦 완전한 Next.js 15 프로젝트 ZIP 다운로드**:
+   - 코드 조각 복붙에 그치지 않고, `package.json`, `tsconfig.json`, `tailwind.config.ts`, `app/page.tsx`가 완비된 **실행 가능한 온전한 프로젝트 ZIP 파일**을 즉시 내려받을 수 있습니다.
+4. **👀 실시간 인터랙티브 브라우저 프리뷰**:
+   - 생성된 기능(프로필 아바타/닉네임 변경, 실시간 댓글/좋아요 등)을 화면 전환 없이 브라우저 내 가상 뷰포트에서 직접 클릭하고 테스트해볼 수 있습니다.
+5. **🎨 에디토리얼 아이보리 & 듀얼 테마 (Green #009651 & Blue #005dac)**:
+   - 편안한 아이보리 캔버스에 감성적인 포레스트 그린 및 모던한 코발트 블루를 원클릭으로 전환 가능합니다.
+6. **Google Gemini API 무료 연동**:
    - Google AI Studio 무료 API 키 지원 (신용카드 불필요)
    - 키가 없을 때도 즉시 동작을 체험할 수 있는 고품질 시뮬레이션(Mock) 모드 탑재
-4. **원클릭 일괄 복사 및 번들 다운로드**:
-   - 탭별 코드 복사 및 전체 세트 일괄 복사/다운로드 지원
 
 ---
 
