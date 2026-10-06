@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Sparkles, ArrowRight, Wand2 } from 'lucide-react'
-import { Card, Button, Badge } from 'gengarileo-design-system'
+import { Card, Button } from 'gengarileo-design-system'
 
 interface FeatureInputProps {
   onBuild: (userGoal: string) => void
@@ -47,16 +47,11 @@ export const FeatureInput: React.FC<FeatureInputProps> = ({ onBuild, isBuilding 
   return (
     <section className="inputSection">
       <div className="heroText">
-        <div className="inline-flex items-center gap-2 mb-3">
-          <Badge variant="sky" size="sm" dot={true}>
-            Autonomous AI Pipeline
-          </Badge>
-          <Badge variant="butter" size="sm">
-            Gengarileo Soft UI
-          </Badge>
+        <div className="heroPillTag">
+          <span>AI Autonomous Feature Engine</span>
         </div>
         <h2 className="heroHeadline">
-          만들고 싶은 기능을 <span className="text-gradient">자연어</span>로 편하게 적어보세요.
+          만들고 싶은 기능을 <span className="highlightPrimary">자연어</span>로 편하게 적어보세요.
         </h2>
         <p className="heroSub">
           AI 비서가 내부에서 <strong>[데이터베이스 ➔ 백엔드 로직 ➔ 프론트엔드 UI]</strong>를 연속으로 알아서 조립해,
@@ -99,7 +94,7 @@ export const FeatureInput: React.FC<FeatureInputProps> = ({ onBuild, isBuilding 
 
             <Button
               type="submit"
-              variant="gradient"
+              variant="primary"
               size="md"
               disabled={!prompt.trim() || isBuilding}
               isLoading={isBuilding}

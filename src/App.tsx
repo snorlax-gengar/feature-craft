@@ -45,12 +45,26 @@ export default function App() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [currentTechStack] = useState<TechStack>('nextjs-supabase')
 
+  const [theme, setTheme] = useState<'green' | 'blue'>(() => {
+    const saved = localStorage.getItem('featurecraft_theme')
+    return saved === 'blue' || saved === 'green' ? saved : 'green'
+  })
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme)
+    localStorage.setItem('featurecraft_theme', theme)
+  }, [theme])
+
   useEffect(() => {
     const savedKey = localStorage.getItem('featurecraft_gemini_key')
     if (savedKey) {
       setApiKey(savedKey)
     }
   }, [])
+
+  function handleToggleTheme() {
+    setTheme((prev) => (prev === 'green' ? 'blue' : 'green'))
+  }
 
   function handleSaveApiKey(newKey: string) {
     setApiKey(newKey)
@@ -100,6 +114,8 @@ export default function App() {
       <Header
         hasApiKey={Boolean(apiKey)}
         onOpenApiKeyModal={() => setIsModalOpen(true)}
+        theme={theme}
+        onToggleTheme={handleToggleTheme}
       />
 
       <main className="mainContent">

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Database, Server, Layout, FileText } from 'lucide-react'
-import { Card, Badge } from 'gengarileo-design-system'
+import { Card } from 'gengarileo-design-system'
 import type { PipelineStep } from '../types/feature.ts'
 
 interface PipelineProgressProps {
@@ -27,9 +27,9 @@ export const PipelineProgress: React.FC<PipelineProgressProps> = ({ steps }) => 
             각 에이전트가 앞 단계의 산출물을 인계받아 변수명이 100% 일치하도록 연속 생성합니다.
           </p>
         </div>
-        <Badge variant="lavender" size="md">
+        <div className="pipelinePercentBadge">
           {progressPercent}%
-        </Badge>
+        </div>
       </div>
 
       <div className="progressBarTrack">
@@ -71,21 +71,13 @@ export const PipelineProgress: React.FC<PipelineProgressProps> = ({ steps }) => 
 
               <div className="stepStatusBadge">
                 {isDone ? (
-                  <Badge variant="sky" size="sm" dot={true}>
-                    완료
-                  </Badge>
+                  <span className="stepBadgeDone">✓ 완료</span>
                 ) : isRunning ? (
-                  <Badge variant="lavender" size="sm" dot={true}>
-                    생성 중
-                  </Badge>
+                  <span className="stepBadgeRunning">● 생성 중</span>
                 ) : isError ? (
-                  <Badge variant="coral" size="sm">
-                    에러 발생
-                  </Badge>
+                  <span className="stepBadgeError">✕ 에러</span>
                 ) : (
-                  <Badge variant="slate" size="sm">
-                    대기
-                  </Badge>
+                  <span className="stepBadgeIdle">대기</span>
                 )}
               </div>
             </div>

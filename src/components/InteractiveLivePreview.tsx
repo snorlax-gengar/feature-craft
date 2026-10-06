@@ -7,7 +7,7 @@ import {
   Send,
   User,
 } from 'lucide-react'
-import { Badge, Button } from 'gengarileo-design-system'
+import { Button } from 'gengarileo-design-system'
 import type { FeatureResult } from '../types/feature.ts'
 
 interface InteractiveLivePreviewProps {
@@ -173,9 +173,9 @@ export const InteractiveLivePreview: React.FC<InteractiveLivePreviewProps> = ({ 
                   <h3 className="text-base font-bold text-slate-900">내 프로필 설정</h3>
                   <p className="text-xs text-slate-500">실시간으로 직접 변경사항을 저장해 보세요.</p>
                 </div>
-                <Badge variant="sky" size="sm" dot={true}>
+                <span className="previewLiveBadge">
                   실시간 인터랙티브
-                </Badge>
+                </span>
               </div>
 
               {/* Avatar Picker */}
@@ -237,7 +237,7 @@ export const InteractiveLivePreview: React.FC<InteractiveLivePreviewProps> = ({ 
 
                 <Button
                   type="submit"
-                  variant="gradient"
+                  variant="primary"
                   size="md"
                   fullWidth={true}
                   disabled={isSaving || !nickname.trim()}

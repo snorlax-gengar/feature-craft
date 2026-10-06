@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { X, ExternalLink, Key, Check } from 'lucide-react'
-import { Button, Badge } from 'gengarileo-design-system'
+import { Button } from 'gengarileo-design-system'
 
 interface ApiKeyModalProps {
   isOpen: boolean
@@ -36,9 +36,9 @@ export const ApiKeyModal: React.FC<ApiKeyModalProps> = ({
       <div className="modalCard" onClick={(e) => e.stopPropagation()}>
         <div className="modalHeader">
           <div className="flex items-center gap-2">
-            <Key size={18} className="text-purple-600" />
+            <Key size={18} className="modalKeyIcon" />
             <h3 className="modalTitle">Google Gemini API 키 설정</h3>
-            <Badge variant="lavender" size="sm">무료 발급</Badge>
+            <span className="modalFreeBadge">100% 무료</span>
           </div>
           <button type="button" onClick={onClose} className="modalCloseBtn">
             <X size={18} />
@@ -98,7 +98,7 @@ export const ApiKeyModal: React.FC<ApiKeyModalProps> = ({
             )}
             <Button
               type="submit"
-              variant="gradient"
+              variant="primary"
               size="sm"
               leftIcon={<Check size={16} />}
               className="modalPrimaryBtn"

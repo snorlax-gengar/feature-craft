@@ -15,7 +15,7 @@ import {
 import type { FeatureResult } from '../types/feature.ts'
 import { createProjectZip } from '../services/zipBuilder.ts'
 import { InteractiveLivePreview } from './InteractiveLivePreview.tsx'
-import { Button, Badge, Card } from 'gengarileo-design-system'
+import { Button, Card } from 'gengarileo-design-system'
 
 interface ResultViewerProps {
   result: FeatureResult
@@ -99,12 +99,12 @@ ${result.guide.markdown}
       <div className="resultHeader">
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <Badge variant="sky" size="sm" dot={true}>
-              실행 가능한 풀스택 프로젝트 생성됨
-            </Badge>
-            <Badge variant="lavender" size="sm">
+            <span className="resultSuccessBadge">
+              ✓ 실행 가능한 풀스택 프로젝트 생성됨
+            </span>
+            <span className="resultPurityBadge">
               변수명 & 타입 100% 일치
-            </Badge>
+            </span>
           </div>
           <h2 className="resultTitle">{result.title}</h2>
           <p className="resultSummary">{result.summary}</p>
@@ -122,7 +122,7 @@ ${result.guide.markdown}
           </Button>
 
           <Button
-            variant={copiedAll ? 'soft-sky' : 'outline'}
+            variant="outline"
             size="sm"
             onClick={handleCopyAll}
             leftIcon={copiedAll ? <Check size={14} /> : <Copy size={14} />}
@@ -133,7 +133,7 @@ ${result.guide.markdown}
 
           {/* Super Prominent ZIP Download Button */}
           <Button
-            variant="gradient"
+            variant="primary"
             size="md"
             onClick={handleDownloadZip}
             disabled={isZipping}
@@ -252,7 +252,7 @@ ${result.guide.markdown}
               </div>
 
               <Button
-                variant={copiedTab === activeTab ? 'soft-sky' : 'outline'}
+                variant="outline"
                 size="xs"
                 onClick={handleCopyCurrent}
                 leftIcon={copiedTab === activeTab ? <Check size={13} /> : <Copy size={13} />}
