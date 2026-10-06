@@ -4,13 +4,19 @@ import { ResultViewer } from './ResultViewer.tsx'
 import { MOCK_PRESETS } from '../services/mockData.ts'
 
 describe('ResultViewer', () => {
-  it('switches between Database, Backend, Frontend, and Guide tabs', () => {
+  it('shows live preview initially, and switches between Database, Backend, Frontend, and Guide tabs', () => {
     const onResetMock = vi.fn()
     const mockResult = MOCK_PRESETS['profile-edit']!
 
     render(<ResultViewer result={mockResult} onReset={onResetMock} />)
 
-    // Initial tab: Database schema
+    // Initial tab: Interactive Live Preview
+    expect(screen.getByText('내 프로필 설정')).toBeTruthy()
+    expect(screen.getByText('실시간 인터랙티브')).toBeTruthy()
+
+    // Switch to Database tab
+    const dbTab = screen.getByRole('button', { name: /1. Database/ })
+    fireEvent.click(dbTab)
     expect(screen.getByText(/CREATE TABLE public.profiles/)).toBeTruthy()
 
     // Switch to Backend tab
@@ -24,7 +30,7 @@ describe('ResultViewer', () => {
     expect(screen.getByText(/export function ProfileEditForm/)).toBeTruthy()
 
     // Switch to Guide tab
-    const guideTab = screen.getByRole('button', { name: /4. 3분 적용 가이드/ })
+    const guideTab = screen.getByRole('button', { name: /4. 3분 설치 가이드/ })
     fireEvent.click(guideTab)
     expect(screen.getByText(/3분 만에 적용하는 가이드/)).toBeTruthy()
   })

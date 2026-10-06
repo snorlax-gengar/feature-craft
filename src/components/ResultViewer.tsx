@@ -9,20 +9,26 @@ import {
   Download,
   RotateCcw,
   Sparkles,
+  Eye,
+  FolderTree,
+  FileCode,
 } from 'lucide-react'
 import type { FeatureResult } from '../types/feature.ts'
+import { createProjectZip } from '../services/zipBuilder.ts'
+import { InteractiveLivePreview } from './InteractiveLivePreview.tsx'
 
 interface ResultViewerProps {
   result: FeatureResult
   onReset: () => void
 }
 
-type TabKey = 'schema' | 'backend' | 'frontend' | 'guide'
+type TabKey = 'preview' | 'schema' | 'backend' | 'frontend' | 'guide'
 
 export const ResultViewer: React.FC<ResultViewerProps> = ({ result, onReset }) => {
-  const [activeTab, setActiveTab] = useState<TabKey>('schema')
+  const [activeTab, setActiveTab] = useState<TabKey>('preview')
   const [copiedTab, setCopiedTab] = useState<string | null>(null)
   const [copiedAll, setCopiedAll] = useState(false)
+  const [isZipping, setIsZipping] = useState(false)
 
   const currentFile =
     activeTab === 'schema'
@@ -69,31 +75,22 @@ ${result.guide.markdown}
     setTimeout(() => setCopiedAll(false), 2000)
   }
 
-  function handleDownloadBundle() {
-    // Generate simple text bundle download
-    const bundleText = `# ${result.title}
-==================================================
-File: ${result.schema.path}
-==================================================
-${result.schema.code}
-
-==================================================
-File: ${result.backend.path}
-==================================================
-${result.backend.code}
-
-==================================================
-File: ${result.frontend.path}
-==================================================
-${result.frontend.code}
-`
-    const blob = new Blob([bundleText], { type: 'text/plain;charset=utf-8' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
-    a.href = url
-    a.download = `feature-bundle-${result.id}.txt`
-    a.click()
-    URL.revokeObjectURL(url)
+  async function handleDownloadZip() {
+    setIsZipping(true)
+    try {
+      const blob = await createProjectZip(result)
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `my-feature-app-${result.id}.zip`
+      a.click()
+      URL.revokeObjectURL(url)
+    } catch (err) {
+      console.error('Failed to create zip:', err)
+      alert('ZIP 파일 생성 중 오류가 발생했습니다.')
+    } finally {
+      setIsZipping(false)
+    }
   }
 
   return (
@@ -101,12 +98,12 @@ ${result.frontend.code}
       {/* Result Top Banner */}
       <div className="resultHeader">
         <div>
-          <div className="flex items-center gap-2 mb-1.5">
+          <div className="flex items-center gap-2 mb-2">
             <span className="resultSuccessBadge">
               <Sparkles size={13} />
-              <span>완성형 풀스택 세트 생성됨</span>
+              <span>실행 가능한 풀스택 프로젝트 생성됨</span>
             </span>
-            <span className="text-xs text-slate-500 font-medium">변수명 100% 매핑 검증 완료</span>
+            <span className="text-xs text-slate-500 font-medium">변수명 & 타입 100% 일치</span>
           </div>
           <h2 className="resultTitle">{result.title}</h2>
           <p className="resultSummary">{result.summary}</p>
@@ -121,28 +118,49 @@ ${result.frontend.code}
             <RotateCcw size={14} />
             <span>새 기능 만들기</span>
           </button>
+
           <button
             type="button"
             onClick={handleCopyAll}
             className={`copyAllBtn ${copiedAll ? 'copyAllBtnSuccess' : ''}`}
           >
             {copiedAll ? <Check size={14} /> : <Copy size={14} />}
-            <span>{copiedAll ? '전체 세트 복사 완료!' : '전체 파일 일괄 복사'}</span>
+            <span>{copiedAll ? '복사 완료!' : '전체 코드 복사'}</span>
           </button>
+
+          {/* Super Prominent ZIP Download Button */}
           <button
             type="button"
-            onClick={handleDownloadBundle}
-            className="downloadBtn"
-            title="텍스트 번들로 다운로드"
+            onClick={handleDownloadZip}
+            disabled={isZipping}
+            className="downloadZipBtn"
           >
-            <Download size={14} />
-            <span>다운로드</span>
+            {isZipping ? (
+              <>
+                <span className="animate-spin inline-block">⏳</span>
+                <span>프로젝트 압축 중...</span>
+              </>
+            ) : (
+              <>
+                <Download size={15} />
+                <span>완전한 프로젝트 ZIP 다운로드</span>
+              </>
+            )}
           </button>
         </div>
       </div>
 
       {/* Tabs */}
       <div className="tabBar">
+        <button
+          type="button"
+          onClick={() => setActiveTab('preview')}
+          className={`tabItem ${activeTab === 'preview' ? 'tabItemActive tabItemPreview' : ''}`}
+        >
+          <Eye size={15} className="text-blue-500" />
+          <span>👀 실시간 인터랙티브 미리보기</span>
+        </button>
+
         <button
           type="button"
           onClick={() => setActiveTab('schema')}
@@ -176,47 +194,93 @@ ${result.frontend.code}
           className={`tabItem ${activeTab === 'guide' ? 'tabItemActive' : ''}`}
         >
           <FileText size={15} />
-          <span>4. 3분 적용 가이드</span>
+          <span>4. 3분 설치 가이드</span>
         </button>
       </div>
 
-      {/* File Info Bar */}
-      <div className="fileInfoBar">
-        <div className="fileInfoLeft">
-          <span className="filePathBadge">
-            📁 {activeTab === 'guide' ? 'README.md' : currentFile?.path}
-          </span>
-          <span className="fileDesc">
-            {activeTab === 'guide'
-              ? '프로젝트에 바로 적용할 수 있는 단계별 가이드'
-              : currentFile?.description}
-          </span>
-        </div>
+      {/* Main Tab View */}
+      {activeTab === 'preview' ? (
+        <InteractiveLivePreview result={result} />
+      ) : (
+        <div className="codeLayoutWrapper">
+          {/* File Explorer Tree Sidebar */}
+          <aside className="fileTreeSidebar">
+            <div className="fileTreeHeader">
+              <FolderTree size={14} className="text-slate-400" />
+              <span>프로젝트 파일 구조</span>
+            </div>
+            <ul className="fileTreeList">
+              <li
+                onClick={() => setActiveTab('schema')}
+                className={`fileTreeItem ${activeTab === 'schema' ? 'fileTreeItemActive' : ''}`}
+              >
+                <FileCode size={13} className="text-amber-500" />
+                <span>{result.schema.path}</span>
+              </li>
+              <li
+                onClick={() => setActiveTab('backend')}
+                className={`fileTreeItem ${activeTab === 'backend' ? 'fileTreeItemActive' : ''}`}
+              >
+                <FileCode size={13} className="text-blue-500" />
+                <span>{result.backend.path}</span>
+              </li>
+              <li
+                onClick={() => setActiveTab('frontend')}
+                className={`fileTreeItem ${activeTab === 'frontend' ? 'fileTreeItemActive' : ''}`}
+              >
+                <FileCode size={13} className="text-cyan-500" />
+                <span>{result.frontend.path}</span>
+              </li>
+              <li
+                onClick={() => setActiveTab('guide')}
+                className={`fileTreeItem ${activeTab === 'guide' ? 'fileTreeItemActive' : ''}`}
+              >
+                <FileText size={13} className="text-emerald-500" />
+                <span>README.md (가이드)</span>
+              </li>
+            </ul>
+          </aside>
 
-        <button
-          type="button"
-          onClick={handleCopyCurrent}
-          className={`copyCurrentBtn ${copiedTab === activeTab ? 'copyCurrentBtnDone' : ''}`}
-        >
-          {copiedTab === activeTab ? <Check size={13} /> : <Copy size={13} />}
-          <span>{copiedTab === activeTab ? '복사됨!' : '이 파일 복사'}</span>
-        </button>
-      </div>
+          {/* Code Content */}
+          <div className="codeContentMain">
+            <div className="fileInfoBar">
+              <div className="fileInfoLeft">
+                <span className="filePathBadge">
+                  📁 {activeTab === 'guide' ? 'README.md' : currentFile?.path}
+                </span>
+                <span className="fileDesc">
+                  {activeTab === 'guide'
+                    ? '프로젝트에 바로 적용할 수 있는 단계별 가이드'
+                    : currentFile?.description}
+                </span>
+              </div>
 
-      {/* Code / Markdown Display */}
-      <div className="codeBox">
-        {activeTab === 'guide' ? (
-          <div className="markdownViewer">
-            <pre className="whitespace-pre-wrap font-sans text-sm text-slate-800 leading-relaxed">
-              {result.guide.markdown}
-            </pre>
+              <button
+                type="button"
+                onClick={handleCopyCurrent}
+                className={`copyCurrentBtn ${copiedTab === activeTab ? 'copyCurrentBtnDone' : ''}`}
+              >
+                {copiedTab === activeTab ? <Check size={13} /> : <Copy size={13} />}
+                <span>{copiedTab === activeTab ? '복사됨!' : '이 파일 복사'}</span>
+              </button>
+            </div>
+
+            <div className="codeBox">
+              {activeTab === 'guide' ? (
+                <div className="markdownViewer">
+                  <pre className="whitespace-pre-wrap font-sans text-sm text-slate-800 leading-relaxed">
+                    {result.guide.markdown}
+                  </pre>
+                </div>
+              ) : (
+                <pre className="codePre">
+                  <code>{currentFile?.code}</code>
+                </pre>
+              )}
+            </div>
           </div>
-        ) : (
-          <pre className="codePre">
-            <code>{currentFile?.code}</code>
-          </pre>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   )
 }

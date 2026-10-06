@@ -783,3 +783,219 @@ body {
     transform: translateY(0);
   }
 }
+
+/* Super Prominent ZIP Download Button */
+.downloadZipBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+  border: none;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.28);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.downloadZipBtn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #1d4ed8, #1e40af);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.38);
+}
+
+.downloadZipBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.tabItemPreview {
+  font-weight: 700;
+  color: #2563eb !important;
+}
+
+/* Live Preview Mockup Frame */
+.previewContainer {
+  background: #f8fafc;
+  border-radius: 0 0 16px 16px;
+  overflow: hidden;
+}
+
+.browserHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 16px;
+  background: #f1f5f9;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.browserDots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+.dotRed {
+  background: #f87171;
+}
+
+.dotYellow {
+  background: #fbbf24;
+}
+
+.dotGreen {
+  background: #34d399;
+}
+
+.browserUrlBar {
+  flex: 1;
+  max-width: 440px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 11.5px;
+  font-family: var(--font-mono);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.deviceToggleGroup {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #e2e8f0;
+  padding: 2px;
+  border-radius: 6px;
+}
+
+.deviceBtn {
+  background: transparent;
+  border: none;
+  padding: 4px 6px;
+  border-radius: 4px;
+  color: #64748b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+}
+
+.deviceBtnActive {
+  background: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.previewViewport {
+  padding: 32px 20px;
+  background: #f8fafc;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 440px;
+}
+
+.previewFrame {
+  width: 100%;
+  transition: max-width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.previewFrameDesktop {
+  max-width: 580px;
+}
+
+.previewFrameMobile {
+  max-width: 375px;
+}
+
+/* Code Layout With File Explorer Tree */
+.codeLayoutWrapper {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 480px;
+}
+
+.fileTreeSidebar {
+  background: #f8fafc;
+  border-right: 1px solid #e2e8f0;
+  padding: 14px 12px;
+}
+
+.fileTreeHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 12px;
+  padding-left: 6px;
+}
+
+.fileTreeList {
+  list-style: none;
+  display: grid;
+  gap: 4px;
+}
+
+.fileTreeItem {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  color: #334155;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.fileTreeItem:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+}
+
+.fileTreeItemActive {
+  background: #e0e7ff !important;
+  color: #1e40af !important;
+  font-weight: 600;
+}
+
+.codeContentMain {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  .codeLayoutWrapper {
+    grid-template-columns: 1fr;
+  }
+  .fileTreeSidebar {
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+  }
+}
+
