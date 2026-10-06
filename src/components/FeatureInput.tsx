@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Sparkles, ArrowRight, Wand2 } from 'lucide-react'
+import { Card, Button, Badge } from 'gengarileo-design-system'
 
 interface FeatureInputProps {
   onBuild: (userGoal: string) => void
@@ -46,6 +47,14 @@ export const FeatureInput: React.FC<FeatureInputProps> = ({ onBuild, isBuilding 
   return (
     <section className="inputSection">
       <div className="heroText">
+        <div className="inline-flex items-center gap-2 mb-3">
+          <Badge variant="sky" size="sm" dot={true}>
+            Autonomous AI Pipeline
+          </Badge>
+          <Badge variant="butter" size="sm">
+            Gengarileo Soft UI
+          </Badge>
+        </div>
         <h2 className="heroHeadline">
           만들고 싶은 기능을 <span className="text-gradient">자연어</span>로 편하게 적어보세요.
         </h2>
@@ -55,58 +64,54 @@ export const FeatureInput: React.FC<FeatureInputProps> = ({ onBuild, isBuilding 
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="inputCard">
-        <textarea
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder="예: 사용자가 이미지를 업로드하고 태그를 붙여서 갤러리 피드에 공유하는 기능 만들어줘"
-          rows={3}
-          disabled={isBuilding}
-          className="featureTextarea"
-        />
+      <Card variant="default" padding="lg" className="inputCard">
+        <form onSubmit={handleSubmit}>
+          <textarea
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="예: 사용자가 이미지를 업로드하고 태그를 붙여서 갤러리 피드에 공유하는 기능 만들어줘"
+            rows={3}
+            disabled={isBuilding}
+            className="featureTextarea"
+          />
 
-        <div className="inputFooter">
-          <div className="presetWrapper">
-            <span className="presetLabel">
-              <Wand2 size={13} className="text-amber-500" />
-              <span>추천 기능:</span>
-            </span>
-            <div className="presetButtons">
-              {PRESET_IDEAS.map((preset) => (
-                <button
-                  key={preset.title}
-                  type="button"
-                  onClick={() => applyPreset(preset.prompt)}
-                  disabled={isBuilding}
-                  className="presetBtn"
-                >
-                  {preset.title}
-                </button>
-              ))}
+          <div className="inputFooter">
+            <div className="presetWrapper">
+              <span className="presetLabel">
+                <Wand2 size={13} className="text-amber-500" />
+                <span>추천 기능:</span>
+              </span>
+              <div className="presetButtons">
+                {PRESET_IDEAS.map((preset) => (
+                  <button
+                    key={preset.title}
+                    type="button"
+                    onClick={() => applyPreset(preset.prompt)}
+                    disabled={isBuilding}
+                    className="presetBtn"
+                  >
+                    {preset.title}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
 
-          <button
-            type="submit"
-            disabled={!prompt.trim() || isBuilding}
-            className="buildSubmitBtn"
-          >
-            {isBuilding ? (
-              <>
-                <span className="animate-spin inline-block">⏳</span>
-                <span>자율 파이프라인 조립 중...</span>
-              </>
-            ) : (
-              <>
-                <Sparkles size={16} />
-                <span>원샷 풀스택 빌드</span>
-                <ArrowRight size={15} />
-              </>
-            )}
-          </button>
-        </div>
-      </form>
+            <Button
+              type="submit"
+              variant="gradient"
+              size="md"
+              disabled={!prompt.trim() || isBuilding}
+              isLoading={isBuilding}
+              leftIcon={!isBuilding ? <Sparkles size={16} /> : undefined}
+              rightIcon={!isBuilding ? <ArrowRight size={15} /> : undefined}
+              className="buildSubmitBtn"
+            >
+              {isBuilding ? '자율 파이프라인 조립 중...' : '원샷 풀스택 빌드'}
+            </Button>
+          </div>
+        </form>
+      </Card>
     </section>
   )
 }

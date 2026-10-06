@@ -3,11 +3,11 @@ import {
   Monitor,
   Smartphone,
   Sparkles,
-  CheckCircle2,
   Heart,
   Send,
   User,
 } from 'lucide-react'
+import { Badge, Button } from 'gengarileo-design-system'
 import type { FeatureResult } from '../types/feature.ts'
 
 interface InteractiveLivePreviewProps {
@@ -154,14 +154,15 @@ export const InteractiveLivePreview: React.FC<InteractiveLivePreviewProps> = ({ 
                   placeholder="댓글을 직접 입력해 보세요..."
                   className="flex-1 px-3 py-2 text-xs border border-slate-200 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
                 />
-                <button
+                <Button
                   type="submit"
+                  size="sm"
+                  variant="primary"
                   disabled={!newComment.trim()}
-                  className="px-3 py-2 bg-slate-900 hover:bg-slate-800 disabled:opacity-40 text-white rounded-lg text-xs font-semibold flex items-center gap-1"
+                  leftIcon={<Send size={12} />}
                 >
-                  <Send size={12} />
-                  <span>등록</span>
-                </button>
+                  등록
+                </Button>
               </form>
             </div>
           ) : (
@@ -172,10 +173,9 @@ export const InteractiveLivePreview: React.FC<InteractiveLivePreviewProps> = ({ 
                   <h3 className="text-base font-bold text-slate-900">내 프로필 설정</h3>
                   <p className="text-xs text-slate-500">실시간으로 직접 변경사항을 저장해 보세요.</p>
                 </div>
-                <span className="px-2.5 py-1 bg-emerald-50 text-emerald-700 text-[11px] font-bold rounded-md border border-emerald-200 flex items-center gap-1">
-                  <CheckCircle2 size={12} />
+                <Badge variant="sky" size="sm" dot={true}>
                   실시간 인터랙티브
-                </span>
+                </Badge>
               </div>
 
               {/* Avatar Picker */}
@@ -235,23 +235,17 @@ export const InteractiveLivePreview: React.FC<InteractiveLivePreviewProps> = ({ 
                   </div>
                 )}
 
-                <button
+                <Button
                   type="submit"
+                  variant="gradient"
+                  size="md"
+                  fullWidth={true}
                   disabled={isSaving || !nickname.trim()}
-                  className="w-full py-2.5 bg-slate-900 hover:bg-slate-800 disabled:opacity-50 text-white rounded-lg text-xs font-bold flex items-center justify-center gap-2 transition-all shadow-sm"
+                  isLoading={isSaving}
+                  leftIcon={!isSaving ? <Sparkles size={14} /> : undefined}
                 >
-                  {isSaving ? (
-                    <>
-                      <span className="animate-spin inline-block">⏳</span>
-                      <span>서버에 저장 중...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Sparkles size={14} />
-                      <span>변경사항 저장하기 (직접 클릭)</span>
-                    </>
-                  )}
-                </button>
+                  {isSaving ? '서버에 저장 중...' : '변경사항 저장하기 (직접 클릭)'}
+                </Button>
               </form>
             </div>
           )}

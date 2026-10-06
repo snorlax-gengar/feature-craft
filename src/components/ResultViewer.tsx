@@ -8,7 +8,6 @@ import {
   Check,
   Download,
   RotateCcw,
-  Sparkles,
   Eye,
   FolderTree,
   FileCode,
@@ -16,6 +15,7 @@ import {
 import type { FeatureResult } from '../types/feature.ts'
 import { createProjectZip } from '../services/zipBuilder.ts'
 import { InteractiveLivePreview } from './InteractiveLivePreview.tsx'
+import { Button, Badge, Card } from 'gengarileo-design-system'
 
 interface ResultViewerProps {
   result: FeatureResult
@@ -94,59 +94,55 @@ ${result.guide.markdown}
   }
 
   return (
-    <div className="resultContainer">
+    <Card variant="default" padding="none" className="resultContainer">
       {/* Result Top Banner */}
       <div className="resultHeader">
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <span className="resultSuccessBadge">
-              <Sparkles size={13} />
-              <span>실행 가능한 풀스택 프로젝트 생성됨</span>
-            </span>
-            <span className="text-xs text-slate-500 font-medium">변수명 & 타입 100% 일치</span>
+            <Badge variant="sky" size="sm" dot={true}>
+              실행 가능한 풀스택 프로젝트 생성됨
+            </Badge>
+            <Badge variant="lavender" size="sm">
+              변수명 & 타입 100% 일치
+            </Badge>
           </div>
           <h2 className="resultTitle">{result.title}</h2>
           <p className="resultSummary">{result.summary}</p>
         </div>
 
         <div className="resultHeaderActions">
-          <button
-            type="button"
+          <Button
+            variant="outline"
+            size="sm"
             onClick={onReset}
+            leftIcon={<RotateCcw size={14} />}
             className="resetBtn"
           >
-            <RotateCcw size={14} />
-            <span>새 기능 만들기</span>
-          </button>
+            새 기능 만들기
+          </Button>
 
-          <button
-            type="button"
+          <Button
+            variant={copiedAll ? 'soft-sky' : 'outline'}
+            size="sm"
             onClick={handleCopyAll}
-            className={`copyAllBtn ${copiedAll ? 'copyAllBtnSuccess' : ''}`}
+            leftIcon={copiedAll ? <Check size={14} /> : <Copy size={14} />}
+            className="copyAllBtn"
           >
-            {copiedAll ? <Check size={14} /> : <Copy size={14} />}
-            <span>{copiedAll ? '복사 완료!' : '전체 코드 복사'}</span>
-          </button>
+            {copiedAll ? '복사 완료!' : '전체 코드 복사'}
+          </Button>
 
           {/* Super Prominent ZIP Download Button */}
-          <button
-            type="button"
+          <Button
+            variant="gradient"
+            size="md"
             onClick={handleDownloadZip}
             disabled={isZipping}
+            isLoading={isZipping}
+            leftIcon={!isZipping ? <Download size={15} /> : undefined}
             className="downloadZipBtn"
           >
-            {isZipping ? (
-              <>
-                <span className="animate-spin inline-block">⏳</span>
-                <span>프로젝트 압축 중...</span>
-              </>
-            ) : (
-              <>
-                <Download size={15} />
-                <span>완전한 프로젝트 ZIP 다운로드</span>
-              </>
-            )}
-          </button>
+            {isZipping ? '프로젝트 압축 중...' : '완전한 프로젝트 ZIP 다운로드'}
+          </Button>
         </div>
       </div>
 
@@ -255,14 +251,15 @@ ${result.guide.markdown}
                 </span>
               </div>
 
-              <button
-                type="button"
+              <Button
+                variant={copiedTab === activeTab ? 'soft-sky' : 'outline'}
+                size="xs"
                 onClick={handleCopyCurrent}
-                className={`copyCurrentBtn ${copiedTab === activeTab ? 'copyCurrentBtnDone' : ''}`}
+                leftIcon={copiedTab === activeTab ? <Check size={13} /> : <Copy size={13} />}
+                className="copyCurrentBtn"
               >
-                {copiedTab === activeTab ? <Check size={13} /> : <Copy size={13} />}
-                <span>{copiedTab === activeTab ? '복사됨!' : '이 파일 복사'}</span>
-              </button>
+                {copiedTab === activeTab ? '복사됨!' : '이 파일 복사'}
+              </Button>
             </div>
 
             <div className="codeBox">
@@ -281,6 +278,6 @@ ${result.guide.markdown}
           </div>
         </div>
       )}
-    </div>
+    </Card>
   )
 }

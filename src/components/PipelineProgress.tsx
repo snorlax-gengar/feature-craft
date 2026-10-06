@@ -1,5 +1,6 @@
 import React from 'react'
-import { CheckCircle2, Loader2, Database, Server, Layout, FileText } from 'lucide-react'
+import { Database, Server, Layout, FileText } from 'lucide-react'
+import { Card, Badge } from 'gengarileo-design-system'
 import type { PipelineStep } from '../types/feature.ts'
 
 interface PipelineProgressProps {
@@ -18,7 +19,7 @@ export const PipelineProgress: React.FC<PipelineProgressProps> = ({ steps }) => 
   const progressPercent = Math.round((completedCount / steps.length) * 100)
 
   return (
-    <div className="pipelineContainer">
+    <Card variant="default" padding="lg" className="pipelineContainer">
       <div className="pipelineHeader">
         <div>
           <h3 className="pipelineTitle">자율 멀티 에이전트 파이프라인 가동 중</h3>
@@ -26,7 +27,9 @@ export const PipelineProgress: React.FC<PipelineProgressProps> = ({ steps }) => 
             각 에이전트가 앞 단계의 산출물을 인계받아 변수명이 100% 일치하도록 연속 생성합니다.
           </p>
         </div>
-        <div className="pipelinePercentBadge">{progressPercent}%</div>
+        <Badge variant="lavender" size="md">
+          {progressPercent}%
+        </Badge>
       </div>
 
       <div className="progressBarTrack">
@@ -68,25 +71,27 @@ export const PipelineProgress: React.FC<PipelineProgressProps> = ({ steps }) => 
 
               <div className="stepStatusBadge">
                 {isDone ? (
-                  <span className="text-emerald-600 flex items-center gap-1 font-semibold text-xs">
-                    <CheckCircle2 size={13} />
+                  <Badge variant="sky" size="sm" dot={true}>
                     완료
-                  </span>
+                  </Badge>
                 ) : isRunning ? (
-                  <span className="text-blue-600 flex items-center gap-1 font-semibold text-xs">
-                    <Loader2 size={13} className="animate-spin" />
+                  <Badge variant="lavender" size="sm" dot={true}>
                     생성 중
-                  </span>
+                  </Badge>
                 ) : isError ? (
-                  <span className="text-rose-600 font-semibold text-xs">에러 발생</span>
+                  <Badge variant="coral" size="sm">
+                    에러 발생
+                  </Badge>
                 ) : (
-                  <span className="text-slate-400 text-xs">대기</span>
+                  <Badge variant="slate" size="sm">
+                    대기
+                  </Badge>
                 )}
               </div>
             </div>
           )
         })}
       </div>
-    </div>
+    </Card>
   )
 }

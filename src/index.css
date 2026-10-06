@@ -3,15 +3,21 @@
    ========================================================================== */
 
 :root {
-  --font-sans: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
+  --font-sans: 'Gowun Dodum', 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-heading: 'Gowun Dodum', 'Pretendard', sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   
-  --bg-app: #f8fafc;
+  --bg-app: #faf9f6;
   --text-main: #0f172a;
   --text-muted: #64748b;
   --border-color: #e2e8f0;
-  --brand-blue: #2563eb;
-  --brand-blue-hover: #1d4ed8;
+  
+  --brand-sky: #38bdf8;
+  --brand-sky-dark: #0284c7;
+  --brand-lavender: #a855f7;
+  --brand-lavender-dark: #9333ea;
+  --brand-butter: #fef08a;
+  --brand-coral: #fb923c;
 }
 
 * {
@@ -22,14 +28,22 @@
 
 body {
   font-family: var(--font-sans);
-  background-color: var(--bg-app);
+  background: 
+    radial-gradient(ellipse at 12% 10%, rgba(56, 189, 248, 0.08) 0%, transparent 45%),
+    radial-gradient(ellipse at 88% 15%, rgba(168, 85, 247, 0.08) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 90%, rgba(254, 240, 138, 0.12) 0%, transparent 55%),
+    #faf9f6;
   color: var(--text-main);
-  line-height: 1.5;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
 }
 
+h1, h2, h3, h4, .font-heading {
+  font-family: var(--font-heading);
+}
+
 .appShell {
-  max-width: 900px;
+  max-width: 920px;
   margin: 0 auto;
   padding: 36px 20px 80px;
   min-height: 100vh;
@@ -49,7 +63,7 @@ body {
   gap: 16px;
   padding-bottom: 24px;
   margin-bottom: 32px;
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.8);
 }
 
 .brandGroup {
@@ -59,114 +73,95 @@ body {
 }
 
 .logoWrap {
-  width: 38px;
-  height: 38px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #1e293b, #0f172a);
-  color: #38bdf8;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.15);
+  transition: transform 0.2s ease;
+}
+
+.logoWrap:hover {
+  transform: scale(1.05);
 }
 
 .brandTitle {
-  font-size: 20px;
+  font-family: var(--font-heading);
+  font-size: 22px;
   font-weight: 800;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   color: #0f172a;
 }
 
 .brandTagline {
-  font-size: 12.5px;
+  font-size: 13px;
   color: var(--text-muted);
   font-weight: 500;
-}
-
-.apiKeyButton {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 7px 12px;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  border: 1px solid var(--border-color);
-  background: #ffffff;
-}
-
-.apiKeyActive {
-  color: #059669;
-  border-color: #a7f3d0;
-  background: #ecfdf5;
-}
-
-.apiKeyInactive {
-  color: #475569;
-  background: #f8fafc;
-}
-
-.apiKeyButton:hover {
-  border-color: #cbd5e1;
-  background: #f1f5f9;
 }
 
 /* Hero & Input */
 .heroText {
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 26px;
 }
 
 .heroHeadline {
-  font-size: 26px;
+  font-family: var(--font-heading);
+  font-size: 28px;
   font-weight: 800;
-  letter-spacing: -0.035em;
+  letter-spacing: -0.03em;
   color: #0f172a;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, #2563eb, #7c3aed);
+  background: linear-gradient(135deg, #0284c7, #9333ea);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
 .heroSub {
-  font-size: 14px;
+  font-size: 14.5px;
   color: #64748b;
-  max-width: 620px;
+  max-width: 640px;
   margin: 0 auto;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 .inputCard {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.05);
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 20px;
+  box-shadow: 
+    0 10px 25px -5px rgba(15, 23, 42, 0.04),
+    0 4px 16px -2px rgba(168, 85, 247, 0.04);
   margin-bottom: 28px;
+  transition: all 0.2s ease;
+}
+
+.inputCard:focus-within {
+  border-color: #c084fc;
+  box-shadow: 
+    0 10px 25px -5px rgba(15, 23, 42, 0.06),
+    0 0 0 3px rgba(168, 85, 247, 0.12);
 }
 
 .featureTextarea {
   width: 100%;
   border: 1px solid #e2e8f0;
-  border-radius: 10px;
-  padding: 14px;
+  border-radius: 14px;
+  padding: 16px;
   font-family: var(--font-sans);
-  font-size: 14.5px;
+  font-size: 15px;
   line-height: 1.6;
   resize: vertical;
   color: #0f172a;
   outline: none;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  background: #ffffff;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .featureTextarea:focus {
-  border-color: var(--brand-blue);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+  border-color: var(--brand-sky);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
 }
 
 .inputFooter {
@@ -191,7 +186,7 @@ body {
   gap: 4px;
   font-size: 12px;
   font-weight: 700;
-  color: #475569;
+  color: #64748b;
 }
 
 .presetButtons {
@@ -201,57 +196,38 @@ body {
 }
 
 .presetBtn {
-  padding: 4px 10px;
-  border-radius: 6px;
-  background: #f1f5f9;
-  border: 1px solid #e2e8f0;
-  color: #334155;
+  padding: 5px 12px;
+  border-radius: 9999px;
+  background: #faf5ff;
+  border: 1px solid #e9d5ff;
+  color: #7e22ce;
   font-size: 12px;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.18s ease;
 }
 
 .presetBtn:hover {
-  background: #e2e8f0;
-  color: #0f172a;
+  background: #f3e8ff;
+  border-color: #d8b4fe;
+  color: #581c87;
+  transform: translateY(-1px);
 }
 
 .buildSubmitBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
-  border-radius: 10px;
-  background: #0f172a;
-  color: #ffffff;
-  border: none;
-  font-size: 13.5px;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.12);
-  transition: all 0.15s ease;
   margin-left: auto;
-}
-
-.buildSubmitBtn:hover:not(:disabled) {
-  background: #1e293b;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.18);
-}
-
-.buildSubmitBtn:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
 }
 
 /* Pipeline Progress */
 .pipelineContainer {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 14px;
-  padding: 22px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  border-radius: 20px;
+  padding: 24px;
   margin-bottom: 28px;
+  box-shadow: 
+    0 10px 25px -5px rgba(15, 23, 42, 0.04),
+    0 4px 16px -2px rgba(168, 85, 247, 0.04);
   animation: fadeIn 0.25s ease-out;
 }
 
@@ -260,77 +236,69 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 14px;
+  margin-bottom: 16px;
 }
 
 .pipelineTitle {
-  font-size: 15px;
-  font-weight: 700;
+  font-family: var(--font-heading);
+  font-size: 17px;
+  font-weight: 800;
   color: #0f172a;
 }
 
 .pipelineSubtitle {
-  font-size: 12.5px;
+  font-size: 13px;
   color: #64748b;
-  margin-top: 2px;
-}
-
-.pipelinePercentBadge {
-  font-size: 14px;
-  font-weight: 800;
-  color: #2563eb;
-  background: #eff6ff;
-  padding: 4px 10px;
-  border-radius: 8px;
+  margin-top: 3px;
 }
 
 .progressBarTrack {
-  height: 6px;
+  height: 8px;
   background: #f1f5f9;
   border-radius: 999px;
   overflow: hidden;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
 .progressBarFill {
   height: 100%;
-  background: linear-gradient(90deg, #2563eb, #3b82f6);
+  background: linear-gradient(90deg, #38bdf8, #a855f7);
   border-radius: 999px;
-  transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .stepsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 14px;
 }
 
 .stepCard {
-  border-radius: 10px;
-  padding: 14px;
+  border-radius: 14px;
+  padding: 16px;
   border: 1px solid #e2e8f0;
-  background: #f8fafc;
+  background: #fafafa;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 10px;
+  gap: 12px;
   transition: all 0.2s ease;
 }
 
 .stepCardDone {
-  border-color: #a7f3d0;
-  background: #f0fdf4;
+  border-color: #bae6fd;
+  background: #f0f9ff;
 }
 
 .stepCardRunning {
-  border-color: #bfdbfe;
-  background: #eff6ff;
-  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+  border-color: #d8b4fe;
+  background: #faf5ff;
+  box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.18);
 }
 
 .stepCardError {
-  border-color: #fecdd3;
-  background: #fff1f2;
+  border-color: #fed7aa;
+  background: #fff7ed;
 }
 
 .stepCardTop {
@@ -340,15 +308,15 @@ body {
 }
 
 .stepIconWrap {
-  width: 28px;
-  height: 28px;
-  border-radius: 7px;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
   background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #0f172a;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
 .stepNumber {
@@ -380,117 +348,45 @@ body {
 /* Result Viewer */
 .resultContainer {
   background: #ffffff;
-  border: 1px solid #e2e8f0;
-  border-radius: 16px;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06);
+  box-shadow: 
+    0 10px 30px -5px rgba(15, 23, 42, 0.05),
+    0 4px 16px -2px rgba(168, 85, 247, 0.05);
   margin-bottom: 32px;
   animation: fadeIn 0.3s ease-out;
 }
 
 .resultHeader {
-  padding: 22px 24px;
+  padding: 24px 26px;
   border-bottom: 1px solid #e2e8f0;
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: space-between;
   gap: 16px;
-  background: #fafafa;
-}
-
-.resultSuccessBadge {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  padding: 3px 9px;
-  border-radius: 6px;
-  background: #ecfdf5;
-  color: #059669;
-  font-size: 11.5px;
-  font-weight: 700;
+  background: #fdfdfd;
 }
 
 .resultTitle {
-  font-size: 18px;
+  font-family: var(--font-heading);
+  font-size: 20px;
   font-weight: 800;
   color: #0f172a;
 }
 
 .resultSummary {
-  font-size: 13px;
+  font-size: 13.5px;
   color: #64748b;
-  margin-top: 3px;
+  margin-top: 4px;
 }
 
 .resultHeaderActions {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
   align-items: center;
-}
-
-.resetBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid #e2e8f0;
-  background: #ffffff;
-  color: #475569;
-  font-size: 12.5px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.resetBtn:hover {
-  background: #f1f5f9;
-  color: #0f172a;
-}
-
-.copyAllBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
-  border-radius: 8px;
-  background: #0f172a;
-  color: #ffffff;
-  border: 1px solid #0f172a;
-  font-size: 12.5px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.copyAllBtn:hover {
-  background: #1e293b;
-}
-
-.copyAllBtnSuccess {
-  background: #059669 !important;
-  border-color: #059669 !important;
-}
-
-.downloadBtn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 12px;
-  border-radius: 8px;
-  background: #ffffff;
-  border: 1px solid #cbd5e1;
-  color: #334155;
-  font-size: 12.5px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.15s ease;
-}
-
-.downloadBtn:hover {
-  background: #f8fafc;
 }
 
 /* Tabs */
@@ -499,19 +395,22 @@ body {
   background: #f8fafc;
   border-bottom: 1px solid #e2e8f0;
   overflow-x: auto;
+  padding: 6px 12px 0;
+  gap: 4px;
 }
 
 .tabItem {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  padding: 12px 18px;
+  padding: 10px 16px;
   font-size: 13px;
   font-weight: 600;
   color: #64748b;
   border: none;
   background: transparent;
   cursor: pointer;
+  border-radius: 10px 10px 0 0;
   border-bottom: 2px solid transparent;
   white-space: nowrap;
   transition: all 0.15s ease;
@@ -519,12 +418,14 @@ body {
 
 .tabItem:hover {
   color: #0f172a;
+  background: rgba(241, 245, 249, 0.7);
 }
 
 .tabItemActive {
-  color: #2563eb;
-  background: #ffffff;
-  border-bottom-color: #2563eb;
+  color: #7e22ce !important;
+  background: #ffffff !important;
+  border-bottom-color: #a855f7 !important;
+  box-shadow: 0 -2px 6px rgba(15, 23, 42, 0.02);
 }
 
 /* File Info Bar */
@@ -978,8 +879,8 @@ body {
 }
 
 .fileTreeItemActive {
-  background: #e0e7ff !important;
-  color: #1e40af !important;
+  background: #f3e8ff !important;
+  color: #6b21a8 !important;
   font-weight: 600;
 }
 
